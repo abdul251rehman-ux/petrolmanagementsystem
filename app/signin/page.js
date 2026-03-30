@@ -58,7 +58,7 @@ const IconArrow = () => (
 
 export default function SignInPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ pumpCode: '', userId: '', password: '' });
+  const [form, setForm] = useState({ pumpCode: '', email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState('');
@@ -71,7 +71,7 @@ export default function SignInPage() {
   const validate = () => {
     const errs = {};
     if (!form.pumpCode.trim()) errs.pumpCode = 'Pump code is required';
-    if (!form.userId.trim()) errs.userId = 'User ID (Mobile) is required';
+    if (!form.email.trim()) errs.email = 'Email is required';
     if (!form.password) errs.password = 'Password is required';
     return errs;
   };
@@ -96,14 +96,11 @@ export default function SignInPage() {
         return;
       }
 
-      const userMatch =
-        company.mobile_no === form.userId.trim() ||
-        company.email === form.userId.trim().toLowerCase();
-
+      const emailMatch = company.email === form.email.trim().toLowerCase();
       const passMatch = company.password_hash === form.password;
 
-      if (!userMatch || !passMatch) {
-        setAuthError('Invalid User ID or Password.');
+      if (!emailMatch || !passMatch) {
+        setAuthError('Invalid Email or Password.');
         setLoading(false);
         return;
       }
@@ -259,9 +256,9 @@ export default function SignInPage() {
               )}
             </div>
 
-            {/* User ID */}
+            {/* Email */}
             <div style={{ marginBottom: '16px' }}>
-              <label className="ps-label">User ID (Mobile / Email)</label>
+              <label className="ps-label">Email</label>
               <div style={{ position: 'relative' }}>
                 <span style={{
                   position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)',
@@ -271,15 +268,16 @@ export default function SignInPage() {
                 </span>
                 <input
                   className="ps-input"
-                  placeholder="Mobile number or email"
-                  value={form.userId}
-                  onChange={handleChange('userId')}
+                  type="email"
+                  placeholder="you@email.com"
+                  value={form.email}
+                  onChange={handleChange('email')}
                   style={{ paddingLeft: '38px' }}
                 />
               </div>
-              {errors.userId && (
+              {errors.email && (
                 <p style={{ fontSize: '11px', color: '#ef4444', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <IconAlert /> {errors.userId}
+                  <IconAlert /> {errors.email}
                 </p>
               )}
             </div>

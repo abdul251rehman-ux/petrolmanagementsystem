@@ -65,7 +65,7 @@ export default function ManageProductsPage() {
 
   const handleEdit = (product) => {
     setEditId(product.id);
-    setEditForm({ name: product.name, unit: product.unit, stock: product.stock, rate: product.rate, hsnCode: product.hsnCode || '' });
+    setEditForm({ name: product.name || '', unit: product.unit || 'Ltr', stock: product.stock ?? '', rate: product.rate ?? '', hsnCode: product.hsnCode || '' });
   };
 
   const handleSave = (id) => {
@@ -144,15 +144,15 @@ export default function ManageProductsPage() {
                   <td style={{ color: '#94a3b8', fontSize: '12px', fontWeight: 600 }}>{i + 1}</td>
                   {editId === p.id ? (
                     <>
-                      <td><input className="ps-input" style={{ padding: '7px 10px', fontSize: '13px' }} value={editForm.name} onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))} /></td>
+                      <td><input className="ps-input" style={{ padding: '7px 10px', fontSize: '13px' }} value={editForm.name || ''} onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))} /></td>
                       <td>
-                        <select className="ps-input" style={{ padding: '7px 10px', fontSize: '13px' }} value={editForm.unit} onChange={e => setEditForm(f => ({ ...f, unit: e.target.value }))}>
+                        <select className="ps-input" style={{ padding: '7px 10px', fontSize: '13px' }} value={editForm.unit || 'Ltr'} onChange={e => setEditForm(f => ({ ...f, unit: e.target.value }))}>
                           <option>Ltr</option><option>Kg</option><option>Cubic Meter</option><option>Unit</option>
                         </select>
                       </td>
-                      <td><input className="ps-input" style={{ padding: '7px 10px', fontSize: '13px', textAlign: 'right' }} value={editForm.stock} onChange={e => setEditForm(f => ({ ...f, stock: e.target.value }))} inputMode="decimal" /></td>
-                      <td><input className="ps-input" style={{ padding: '7px 10px', fontSize: '13px', textAlign: 'right' }} value={editForm.rate} onChange={e => setEditForm(f => ({ ...f, rate: e.target.value }))} inputMode="decimal" /></td>
-                      <td><input className="ps-input" style={{ padding: '7px 10px', fontSize: '13px' }} value={editForm.hsnCode} onChange={e => setEditForm(f => ({ ...f, hsnCode: e.target.value }))} /></td>
+                      <td><input className="ps-input" style={{ padding: '7px 10px', fontSize: '13px', textAlign: 'right' }} value={editForm.stock ?? ''} onChange={e => setEditForm(f => ({ ...f, stock: e.target.value }))} inputMode="decimal" /></td>
+                      <td><input className="ps-input" style={{ padding: '7px 10px', fontSize: '13px', textAlign: 'right' }} value={editForm.rate ?? ''} onChange={e => setEditForm(f => ({ ...f, rate: e.target.value }))} inputMode="decimal" /></td>
+                      <td><input className="ps-input" style={{ padding: '7px 10px', fontSize: '13px' }} value={editForm.hsnCode || ''} onChange={e => setEditForm(f => ({ ...f, hsnCode: e.target.value }))} /></td>
                       <td style={{ textAlign: 'right', fontWeight: 700, color: '#7c3aed', fontSize: '13px' }}>
                         Rs. {fmt(parseFloat(editForm.stock || 0) * parseFloat(editForm.rate || 0))}
                       </td>
